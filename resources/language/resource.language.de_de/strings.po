@@ -1,6 +1,6 @@
 # Kodi Media Center language file
 # Addon Name: Arctic: Zephyr - Reloaded - Automatic Day/Night Colors
-# Addon id: service.arctic.zephyr.rounded.autocolors
+# Addon id: service.arctic.zephyr.mod.autocolors
 # Addon Provider: semool
 msgid ""
 msgstr ""

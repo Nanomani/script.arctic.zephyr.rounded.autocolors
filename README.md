@@ -1,6 +1,6 @@
-![](https://github.com/Nanomani/script.arctic.zephyr.rounded.autocolors/tree/main/resources/images/icon.png)
+![](https://raw.githubusercontent.com/semool/script.arctic.zephyr.mod.autocolors/master/resources/images/icon.png)
 
-## Arctic: Zephyr - Rounded - Automatic Day and Night Colors
+## Arctic: Zephyr - Reloaded - Automatic Day and Night Colors
 
 Install first: https://github.com/semool/script.module.astral/releases/
 
