@@ -1,6 +1,6 @@
 ![](https://github.com/Nanomani/script.arctic.zephyr.rounded.autocolors/blob/master/resources/images/icon.png)
 
-## Arctic: Zephyr - Reloaded - Automatic Day and Night Colors
+## Arctic: Zephyr - Rounded - Automatic Day and Night Colors
 
 Install first: https://github.com/semool/script.module.astral/releases/
 
@@ -10,7 +10,7 @@ The Time can set manualy or you can set your Location and the Theme will switch 
 
 Disable the Automatic:
 - Turn off this Addon
-- Go to "Skin Settings - Furniture" and deactivate the Automatic
+- Go to "Skin Settings > Appearance" and disable "Colours Theme - Switch based on Sunrise/Sunset"
 
 ## Credits
 
