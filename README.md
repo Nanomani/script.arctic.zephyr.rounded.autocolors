@@ -14,7 +14,7 @@ Disable the Automatic:
 
 ## Credits
 
-All profits from this add-on must go to the author and creator.
+All thanks for this addon go to the author and creator.
 [Semool](https://github.com/semool).
 
 
