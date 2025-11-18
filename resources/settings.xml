@@ -9,7 +9,7 @@
 		<setting id="start_time_sun" type="time" label="30014" enable="false" visible="eq(-6,true)" default=""/>
 		<setting id="end_time_sun" type="time" label="30015" enable="false" visible="eq(-7,true)" default=""/>
 		<setting id="lightmode" type="select" default="Light" label="30006" values="Light|Light Brown" />
-		<setting id="darkmode" type="select" default="SKINDEFAULT" label="30005" values="SKINDEFAULT|Darker|Darkest" />
+		<setting id="darkmode" type="select" default="SKINDEFAULT" label="30005" values="SKINDEFAULT|Brown|Darkest" />
 	</category>
 	<category label="30009">
 		<setting id="player" type="bool" default="false" label="30007" />
