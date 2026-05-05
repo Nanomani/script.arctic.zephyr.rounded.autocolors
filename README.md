@@ -2,10 +2,9 @@
 
 ## Arctic: Zephyr - Rounded - Automatic Day and Night Colors
 
-Install first: https://github.com/semool/script.module.astral/releases/
+Install first: [script.module.astral-3.4.zip](https://raw.githubusercontent.com/Nanomani/repository.nanomani/main/script.module.astral/script.module.astral-3.4.zip)  
 
 This little Addon switch the Skin Color Theme based on Time
-
 The Time can set manualy or you can set your Location and the Theme will switch based on sunset/sunrise.
 
 Disable the Automatic:
