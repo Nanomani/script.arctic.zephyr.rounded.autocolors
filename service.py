@@ -42,27 +42,28 @@ def dialogcheck():
    return windowid,windowname
 
 def playercheck():
-   player = addon.getSetting("player")
-   speedstate = False
-   if player == "false":
+   # If "Allow Theme change while playing media" is TRUE, we return False (don't block)
+   # If it is FALSE, we return True if something is playing (block)
+   if addon.getSettingBool("player"):
+      playcheck = False
+   else:
       playcheck = xbmc.Player().isPlaying()
       if playcheck:
-         pausecheck = getJsonRPC({"jsonrpc": "2.0","method": "Player.GetProperties","params": { "playerid": 1, "properties": ["speed"] },"id": 1})
+         # If playing, check if it's paused
          try:
+            pausecheck = getJsonRPC({"jsonrpc": "2.0","method": "Player.GetProperties","params": { "playerid": 1, "properties": ["speed"] },"id": 1})
             speedstate = pausecheck['result']['speed']
             if speedstate == 0:
                playcheck = False
          except:
             pass
-   else:
-      playcheck = False
-   log("Player Check: %s" % playcheck)
-   log("Player Pause Check: %s" % speedstate)
+   log("Player Check (blocking): %s" % playcheck)
    return playcheck
 
 def screensavercheck():
-   saver = addon.getSetting("saver")
-   if saver == "true":
+   # If "Allow Theme change when Screensaver is on" is TRUE, we return False (don't block)
+   # If it is FALSE, we return the actual screensaver state (block if active)
+   if addon.getSettingBool("saver"):
       screensaver = False
    else:
       try:
@@ -70,7 +71,7 @@ def screensavercheck():
          screensaver = savercheck['result']['System.ScreenSaverActive']
       except:
          screensaver = False
-   log("Screensaver Check: %s" % screensaver)
+   log("Screensaver Check (blocking): %s" % screensaver)
    return screensaver
 
 @timed_lru_cache(seconds=20)
@@ -136,8 +137,8 @@ def main():
    log("Current Theme Color: %s" % activecolor)
 
    # Calculate Sunrise -> Sunset
-   sunchange = addon.getSetting("sunchange")
-   if sunchange == "true":
+   sunchange = addon.getSettingBool("sunchange")
+   if sunchange:
       location = addon.getSetting("location")
       latitude = addon.getSetting("latitude")
       longitude = addon.getSetting("longitude")

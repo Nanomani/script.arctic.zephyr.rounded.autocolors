@@ -14,22 +14,22 @@ addonName = addon.getAddonInfo("name")
 location = addon.getSetting("location")
 cache = simplecache.SimpleCache()
 
-# Recherche de localisation via astral.geocoder.search_locations()
-# (anciennement via l'API Yahoo Weather qui n'est plus disponible)
+# Location search via astral.geocoder.search_locations()
+# (previously via Yahoo Weather API which is no longer available)
 #
-# Note: simplecache utilise eval() pour deserialiser. On stocke donc les
-# resultats sous forme de liste de dicts (types primitifs) plutot que
-# d'objets LocationInfo, pour eviter un NameError a la deserialisation.
-# Le try/except sur cache.get() absorbe les anciennes entrees du cache
-# qui contenaient des objets LocationInfo (format incompatible).
+# Note: simplecache uses eval() for deserialization. We therefore store
+# results as a list of dicts (primitive types) rather than LocationInfo
+# objects, to avoid a NameError during deserialization.
+# The try/except on cache.get() absorbs old cache entries that contained
+# LocationInfo objects (incompatible format).
 
 def _locs_to_cache(locs):
-   """Convertit une liste de LocationInfo en liste de dicts serializables."""
+   """Converts a list of LocationInfo to a list of serializable dicts."""
    return [{"name": l.name, "region": l.region, "timezone": l.timezone,
             "latitude": l.latitude, "longitude": l.longitude} for l in locs]
 
 def _locs_from_cache(data):
-   """Reconstruit une liste de LocationInfo depuis des dicts mis en cache."""
+   """Reconstructs a list of LocationInfo from cached dicts."""
    return [LocationInfo(name=d["name"], region=d["region"],
                         timezone=d["timezone"], latitude=d["latitude"],
                         longitude=d["longitude"]) for d in data]
@@ -45,9 +45,9 @@ def search_location():
       cachekey = "loc_search_" + text.lower().replace(" ", "_")
       cachedata = None
       try:
-         # simplecache appelle eval() en interne — une ancienne entree au
-         # format LocationInfo levera NameError ici ; on la traite comme un
-         # cache miss et on la remplace par le nouveau format dict.
+         # simplecache calls eval() internally — an old entry in
+         # LocationInfo format will raise NameError here; we treat it
+         # as a cache miss and replace it with the new dict format.
          cachedata = cache.get(cachekey)
       except Exception as e:
          log("Cache read error (stale entry purged): %s" % e, WARNING)
@@ -80,7 +80,7 @@ def search_location():
             addon.setSetting("location", sel.name)
             addon.setSettingNumber("latitude", sel.latitude)
             addon.setSettingNumber("longitude", sel.longitude)
-            # Calculer et sauvegarder lever/coucher avec le timezone de la ville
+            # Calculate and save sunrise/sunset with the city's timezone
             times = suntimes(sel.name, sel.latitude, sel.longitude, sel.timezone)
             addon.setSetting("start_time_sun", times["start"])
             addon.setSetting("end_time_sun", times["end"])

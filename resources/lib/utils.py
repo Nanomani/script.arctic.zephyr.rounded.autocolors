@@ -45,11 +45,11 @@ def setJsonRPC(data):
       pass
 
 def _safe_cache_get(cachename):
-   """Lit le cache en absorbant les erreurs de deserialisation (eval).
+   """Reads the cache while absorbing deserialization errors (eval).
 
-   simplecache utilise eval() en interne. Des anciennes entrees contenant
-   des objets non-primitifs (ZoneInfo, tzinfo, LocationInfo...) peuvent
-   lever NameError. On les traite comme un cache miss et on les supprime.
+   simplecache uses eval() internally. Old entries containing
+   non-primitive objects (ZoneInfo, tzinfo, LocationInfo...) can
+   raise NameError. We treat them as a cache miss and delete them.
    """
    try:
       return cache.get(cachename)
@@ -58,27 +58,27 @@ def _safe_cache_get(cachename):
       return None
 
 def suntimes(location, latitude, longitude, timezone=None):
-   """Calcule les heures de lever et coucher du soleil pour un lieu donne.
+   """Calculates sunrise and sunset times for a given location.
 
    Args:
-      location:  Nom de la ville (utilise comme cle de cache)
-      latitude:  Latitude du lieu
-      longitude: Longitude du lieu
-      timezone:  Fuseau horaire IANA de la ville, ex. 'Europe/Paris'
-                 (optionnel -- utilise le timezone systeme si absent)
+      location:  City name (used as cache key)
+      latitude:  Latitude of the location
+      longitude: Longitude of the location
+      timezone:  IANA timezone of the city, e.g. 'Europe/Paris'
+                 (optional -- uses system timezone if absent)
 
    Returns:
-      dict avec les cles 'start', 'end', 'local_timezone' (str),
-      'zonecache' et 'timecache'.
+      dict with keys 'start', 'end', 'local_timezone' (str),
+      'zonecache' and 'timecache'.
 
-   Note cache: seuls des types primitifs (str, bool) sont stockes pour
-   rester compatibles avec le eval() interne de simplecache.
+   Cache note: only primitive types (str, bool) are stored to
+   remain compatible with simplecache's internal eval().
    """
    zonecache = False
-   tz_str = None  # fuseau horaire sous forme de chaine (pour cache et logs)
+   tz_str = None  # timezone as string (for cache and logs)
 
    if timezone:
-      # Fuseau horaire fourni directement par le geocoder
+      # Timezone provided directly by the geocoder
       try:
          local_timezone = zoneinfo.ZoneInfo(timezone)
          tz_str = timezone
@@ -88,7 +88,7 @@ def suntimes(location, latitude, longitude, timezone=None):
          local_timezone = datetime.datetime.now(datetime.timezone.utc).astimezone().tzinfo
          tz_str = str(local_timezone)
    else:
-      # Lire le timezone depuis le cache (stocke comme chaine depuis ce correctif)
+      # Read timezone from cache (stored as string since this fix)
       tz_cachename = addonId + ".timezone"
       cached_tz = _safe_cache_get(tz_cachename)
       if cached_tz and isinstance(cached_tz, str):
@@ -100,12 +100,12 @@ def suntimes(location, latitude, longitude, timezone=None):
             local_timezone = datetime.datetime.now(datetime.timezone.utc).astimezone().tzinfo
             tz_str = str(local_timezone)
       else:
-         # Cache vide ou ancienne entree non-string : recalculer et re-stocker
+         # Empty cache or old non-string entry: recalculate and re-store
          local_timezone = datetime.datetime.now(datetime.timezone.utc).astimezone().tzinfo
          tz_str = str(local_timezone)
          cache.set(tz_cachename, tz_str, expiration=datetime.timedelta(hours=12))
 
-   # Lire le cache lever/coucher (ne contient que 'start' et 'end', types str)
+   # Read sunrise/sunset cache (contains only 'start' and 'end', str types)
    sun_cachename = addonId + "." + str(location)
    cachedata = _safe_cache_get(sun_cachename)
    if cachedata and isinstance(cachedata, dict) and "start" in cachedata and "end" in cachedata:
