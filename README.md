@@ -17,6 +17,10 @@ Install first: [script.module.astral-3.4.zip](https://raw.githubusercontent.com/
 &nbsp;  
 ![](https://github.com/Nanomani/script.arctic.zephyr.rounded.autocolors/blob/master/resources/images/icon.png)  
 
+## Skin: Arctic Zephyr - Rounded  
+
+### 👉 **[Forum Kodi](https://forum.kodi.tv/showthread.php?tid=387634)**  
+
 ## Credits
 
 All thanks for this addon go to the author and creator.
